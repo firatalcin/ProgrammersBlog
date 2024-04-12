@@ -1,6 +1,6 @@
 ﻿namespace ProgrammersBlog.Shared.Entities.Abstract
 {
-    public abstract class EntityBase
+    public abstract class EntityBase : IEntity
     {
         public virtual int Id { get; set; }
         public virtual DateTime CreateDate { get; set; } = DateTime.Now;
