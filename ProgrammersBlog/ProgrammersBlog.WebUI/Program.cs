@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using ProgrammersBlog.Data.Concrete.EntityFramework.Contexts;
+using ProgrammersBlog.Services.Concrete.DependecyResolvers.Microsoft;
+
 namespace ProgrammersBlog.WebUI
 {
     public class Program
@@ -5,6 +9,8 @@ namespace ProgrammersBlog.WebUI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            DependencyExtension.AddDependency(builder.Services);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
