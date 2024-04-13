@@ -10,7 +10,7 @@ namespace ProgrammersBlog.WebUI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            DependencyExtension.AddDependency(builder.Services);
+            builder.Services.AddDependency();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
