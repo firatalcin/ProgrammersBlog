@@ -15,7 +15,7 @@ namespace ProgrammersBlog.Services.Concrete.DependecyResolvers.Microsoft
         {
             services.AddDbContext<AppDbContext>(opt =>
             {
-                opt.UseSqlServer("server=MAKINA\\SQLEXPRESS01; database= ProgrammersBlogDb; integrated security=true;");
+                opt.UseSqlServer("server=MAKINA\\SQLEXPRESS01; database= ProgrammersBlogDb; integrated security=true; trustServerCertificate=true");
             });
         }
     }

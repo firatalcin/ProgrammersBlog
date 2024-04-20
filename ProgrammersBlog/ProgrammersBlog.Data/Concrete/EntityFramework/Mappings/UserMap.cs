@@ -44,6 +44,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
                 RoleId = 1,
                 FirstName = "Fırat",
                 LastName = "Alçın",
+                UserName = "firatalcin",
                 Email = "firatalcin04@gmail.com",
                 IsActive = true,
                 IsDeleted = false,
