@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Data.Concrete.EntityFramework.Contexts;
 using ProgrammersBlog.Services.Concrete.DependecyResolvers.Microsoft;
+using ProgrammersBlog.Services.Extensions;
 
 namespace ProgrammersBlog.WebUI
 {
@@ -10,7 +11,9 @@ namespace ProgrammersBlog.WebUI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDependency();
+            builder.Services.AddMyDb();
+            builder.Services.LoadMyServices();
+            
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
