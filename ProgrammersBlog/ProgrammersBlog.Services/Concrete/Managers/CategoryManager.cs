@@ -1,15 +1,10 @@
 ﻿using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Entities.Concrete;
-using ProgrammersBlog.Entities.Dtos.Category;
+using ProgrammersBlog.Entities.Dtos.CategoryDtos;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Shared.Utilities.Results.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Services.Concrete.Managers
 {
@@ -128,7 +123,7 @@ namespace ProgrammersBlog.Services.Concrete.Managers
                 await _unitOfWork.Categories.UpdateAsync(category);
                 await _unitOfWork.SaveAsync();
 
-                return new Result(ResultStatus.Success, $"{categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir.")
+                return new Result(ResultStatus.Success, $"{categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir.");
             }
             else
             {

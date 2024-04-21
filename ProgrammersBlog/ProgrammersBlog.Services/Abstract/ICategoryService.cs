@@ -1,5 +1,5 @@
 ﻿using ProgrammersBlog.Entities.Concrete;
-using ProgrammersBlog.Entities.Dtos.Category;
+using ProgrammersBlog.Entities.Dtos.CategoryDtos;
 using ProgrammersBlog.Shared.Utilities.Results.Abstract;
 
 namespace ProgrammersBlog.Services.Abstract
