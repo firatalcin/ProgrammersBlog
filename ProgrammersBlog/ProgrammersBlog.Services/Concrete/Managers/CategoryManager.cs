@@ -22,14 +22,41 @@ namespace ProgrammersBlog.Services.Concrete.Managers
             _unitOfWork = unitOfWork;
         }
 
-        public Task<IResult> Add(CategoryAddDto categoryAddDto, string createdByName)
+        public async Task<IResult> Add(CategoryAddDto categoryAddDto, string createdByName)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.Categories.AddAsync(new Category
+            {
+                Name = categoryAddDto.Name,
+                IsActive = categoryAddDto.IsActive,
+                Description = categoryAddDto.Description,
+                Note = categoryAddDto.Note,
+                CreatedByName = createdByName,
+                CreatedDate = DateTime.Now,
+                ModifiedByName = createdByName,
+                ModifiedDate = DateTime.Now,
+                IsDeleted = false
+            });
+
+            await _unitOfWork.SaveAsync();
+
+            return new Result(ResultStatus.Success, $"{categoryAddDto.Name} adlı kategori başarıyla eklenmiştir.");
         }
 
-        public Task<IResult> Delete(int categoryId)
+        public async Task<IResult> Delete(int categoryId, string modifiedByName)
         {
-            throw new NotImplementedException();
+            var category = await _unitOfWork.Categories.GetAsync(x => x.Id == categoryId);
+            if(category != null)
+            {
+                category.IsDeleted = true;
+                category.ModifiedByName = modifiedByName;
+                category.ModifiedDate = DateTime.Now;
+                await _unitOfWork.Categories.UpdateAsync(category).ContinueWith(x => _unitOfWork.SaveAsync());
+                return new Result(ResultStatus.Success, $"{category.Name} adlı kategori başarıyla silinmiştir.");
+            }
+            else
+            {
+                return new Result(ResultStatus.Error, "Böyle bir kategori bulunamadı.");
+            }
         }
 
         public async Task<IDataResult<Category>> Get(int categoryId)
@@ -71,14 +98,42 @@ namespace ProgrammersBlog.Services.Concrete.Managers
             }
         }
 
-        public Task<IResult> HardDelete(int categoryId)
+        public async Task<IResult> HardDelete(int categoryId)
         {
-            throw new NotImplementedException();
+            var category = await _unitOfWork.Categories.GetAsync(x => x.Id == categoryId);
+            if (category != null)
+            {
+                await _unitOfWork.Categories.DeleteAsync(category).ContinueWith(x => _unitOfWork.SaveAsync());
+                return new Result(ResultStatus.Success, $"{category.Name} adlı kategori başarıyla veribanından silinmiştir.");
+            }
+            else
+            {
+                return new Result(ResultStatus.Error, "Böyle bir kategori bulunamadı.");
+            }
         }
 
-        public Task<IResult> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
+        public async Task<IResult> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
         {
-            throw new NotImplementedException();
+            var category = await _unitOfWork.Categories.GetAsync(x => x.Id == categoryUpdateDto.Id);
+            if(category != null)
+            {
+                category.Name = categoryUpdateDto.Name;
+                category.Description = categoryUpdateDto.Description;
+                category.Note = categoryUpdateDto.Note;
+                category.IsActive = categoryUpdateDto.IsActive;
+                category.IsDeleted = categoryUpdateDto.IsDeleted;
+                category.ModifiedByName = modifiedByName;
+                category.ModifiedDate = DateTime.Now;
+
+                await _unitOfWork.Categories.UpdateAsync(category);
+                await _unitOfWork.SaveAsync();
+
+                return new Result(ResultStatus.Success, $"{categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir.")
+            }
+            else
+            {
+                return new Result(ResultStatus.Error, "Böyle bir kategori bulunamadı.");
+            }
         }
     }
 }
